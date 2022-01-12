@@ -88,15 +88,40 @@ client.on("message", async (message) => {
   } else if (command === "comandos") {
     client.commands.get("comandos").execute(message, args);
   } else if (command === "play") {
-    client.commands.get("play").execute(message, args);
+    const voiceChannel = message.member.voice.channel;
+    if (!voiceChannel) {
+      message.channel.send("Metete a un canal mostro");
+    }
+    const song = args.join(" ");
+    if (!song) {
+      message.channel.send("Escribí que queres escuchar la puta que te parió");
+    } else {
+      distube.play(message, args.join(" "));
+    }
   } else if (command === "stop") {
-    client.commands.get("stop").execute(message, args);
+    distube.stop(message);
+    message.channel.send("Ahi le pegué un cachetazo");
   } else if (command === "leave") {
-    client.commands.get("leave").execute(message, args);
+    distube.voices.get(message)?.leave();
   } else if (command === "skip") {
-    client.commands.get("skip").execute(message, args);
+    distube.skip(message);
   } else if (command === "queue") {
-    client.commands.get("queue").execute(message, args);
+    const queue = distube.getQueue(message);
+    if (!queue) {
+      message.channel.send("Reproduciendo ahora!");
+    } else {
+      message.channel.send(
+        `En cola:\n${queue.songs
+          .map(
+            (song, id) =>
+              `**${id ? id : "Reproduciendo ahora"}**. ${song.name} - \`${
+                song.formattedDuration
+              }\``
+          )
+          .slice(0, 10)
+          .join("\n")}`
+      );
+    }
   } else {
     message.channel.send(
       "Escribí un comando que exista la concha de tu madre."
