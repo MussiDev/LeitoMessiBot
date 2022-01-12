@@ -17,10 +17,8 @@ const client = new Client({
     Intents.FLAGS.GUILD_VOICE_STATES,
   ],
 });
-
 // Prefijo a utilizar
 const prefix = "!";
-
 client.on("ready", () => {
   console.log("ARRANQUE PERRRO");
   client.user.setPresence({
@@ -31,6 +29,7 @@ client.on("ready", () => {
     status: "dnd",
   });
 });
+// Si existe error
 client.on("error", (error) => {
   console.log(error);
   return;
@@ -38,6 +37,7 @@ client.on("error", (error) => {
 
 // Se ejecuta cada vez que se envía un mensaje
 client.on("message", async (message) => {
+  // Embed de saludo
   const embedDatos = new Discord.MessageEmbed()
     .setTitle("Hola!")
     .setAuthor(message.author.username, message.author.displayAvatarURL())
@@ -82,62 +82,31 @@ client.on("message", async (message) => {
   } else if (command === "abril") {
     client.commands.get("abril").execute(message, args);
   } else if (command === "teamobot") {
-    message.channel.send(
-      "iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii"
-    );
+    client.commands.get("teamobot").execute(message, args);
   } else if (command === "hola") {
     message.channel.send(embedDatos);
   } else if (command === "comandos") {
     client.commands.get("comandos").execute(message, args);
   } else if (command === "play") {
-    const voiceChannel = message.member.voice.channel;
-    if (!voiceChannel) {
-      message.channel.send("Metete a un canal mostro");
-    }
-    const song = args.join(" ");
-    if (!song) {
-      message.channel.send("Escribí que queres escuchar la puta que te parió");
-    } else {
-      distube.play(message, args.join(" "));
-    }
-  } else if (["repeat", "loop"].includes(command)) {
-    const mode = distube.setRepeatMode(message);
-    message.channel.send(
-      `Modo loop paa \`${
-        mode ? (mode === 2 ? "Toda la cola" : "Esta canción") : "Off"
-      }\``
-    );
+    client.commands.get("play").execute(message, args);
   } else if (command === "stop") {
-    distube.stop(message);
-    message.channel.send("Ahi le pegué un cachetazo");
+    client.commands.get("stop").execute(message, args);
   } else if (command === "leave") {
-    distube.voices.get(message)?.leave();
+    client.commands.get("leave").execute(message, args);
   } else if (command === "skip") {
-    distube.skip(message);
+    client.commands.get("skip").execute(message, args);
   } else if (command === "queue") {
-    const queue = distube.getQueue(message);
-    if (!queue) {
-      message.channel.send("Reproduciendo ahora!");
-    } else {
-      message.channel.send(
-        `En cola:\n${queue.songs
-          .map(
-            (song, id) =>
-              `**${id ? id : "Reproduciendo ahora"}**. ${song.name} - \`${
-                song.formattedDuration
-              }\``
-          )
-          .slice(0, 10)
-          .join("\n")}`
-      );
-    }
+    client.commands.get("queue").execute(message, args);
   } else {
-    message.reply("Escribí un comando que exista la concha de tu madre.");
+    message.channel.send(
+      "Escribí un comando que exista la concha de tu madre."
+    );
   }
 });
+// Cuando se borra un mensaje del canal -->
 client.on("messageDelete", async (message) => {
   let canal = client.channels.cache.get("930184160054759505");
-  canal.send(`**${message.author.username}** Que borrás puto?`);
+  canal.send(`**${message.author.username}** Que borrás ajnopolitan?`);
 });
 
 //Distube
@@ -181,6 +150,9 @@ distube.on("error", (textChannel, e) => {
 });
 distube.on("finishSong", (queue) =>
   queue.textChannel.send("Terminó tu canción de mierda!")
+);
+distube.on("finishPlaylist", (queue) =>
+  queue.textChannel.send("Terminó tu playlist de mierda!")
 );
 distube.on("disconnect", (queue) => queue.textChannel.send("Me fuí!"));
 distube.on("empty", (queue) => queue.textChannel.send("eh!"));
