@@ -19,11 +19,11 @@ module.exports = {
         "Te pensas que soy adivino? Escribí el comando y después un numero por favor"
       );
 
-    if (cantidad > 500) {
+    if (cantidad > 100) {
       message.channel.send(
-        "El maximo de mensajes que puedo borrar es 500 pelotudo"
+        "El maximo de mensajes que puedo borrar es 100 pelotudo"
       );
-      cantidad = 500;
+      cantidad = 100;
     }
 
     message.channel.messages.fetch({ limit: cantidad }).then((mensajes) => {
