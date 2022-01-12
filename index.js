@@ -125,11 +125,15 @@ client.on("message", async (message) => {
 
       .setAuthor(
         `Información del bot`,
-        client.user.displayAvatarURL({ size: "1024", format: "png" })
+        client.user.displayAvatarURL({
+          format: "png",
+          size: 1024,
+          dynamic: true,
+        })
       )
-      .addField(`Dueño`, `User#0000`, true)
-      .addField(`Version`, `1.0.0`, true)
-      .addField(`Libreria`, Discord.version, true)
+      .addField(`Dueño`, `Joaquín Mussi`, true)
+      .addField(`Version`, `Brasil 2014`, true)
+      .addField(`Libreria`, "Argentina-Iran", true)
       .addField(
         `Memoria`,
         `${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2)} MB`,
