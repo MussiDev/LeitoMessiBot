@@ -15,6 +15,7 @@ const client = new Client({
     Intents.FLAGS.GUILDS,
     Intents.FLAGS.GUILD_MESSAGES,
     Intents.FLAGS.GUILD_VOICE_STATES,
+    Intents.FLAGS.GUILD_PRESENCES,
   ],
 });
 // Prefijo a utilizar
@@ -72,7 +73,45 @@ client.on("message", async (message) => {
 
   // Comandos
   if (command === "ajno") {
-    client.commands.get("ajno").execute(message, args);
+    let userm = message.mentions.users.first() || message.author;
+
+    const embed = new Discord.MessageEmbed()
+      .setThumbnail(
+        userm.displayAvatarURL({ format: "png", size: 1024, dynamic: true })
+      )
+      .setAuthor(
+        userm.tag,
+        userm.displayAvatarURL({ format: "png", size: 1024, dynamic: true })
+      )
+      .addField(
+        "Jugando a",
+        message.guild.members.resolve(userm.id).presence.activities[0]
+          ? message.guild.members.resolve(userm.id).presence.activities[0].name
+          : "Nada",
+        true
+      )
+      .addField("ID", userm.id, true)
+      .addField(
+        "Estado",
+        message.guild.members.resolve(userm.id).presence.status,
+        true
+      )
+      .addField("Apodo", message.guild.members.resolve(userm.id).nickname, true)
+      .addField("Cuenta Creada", userm.createdAt.toDateString(), true)
+      .addField(
+        "Fecha de Ingreso",
+        message.guild.members.resolve(userm.id).joinedAt.toDateString()
+      )
+      .addField(
+        "Roles",
+        message.guild.members
+          .resolve(userm.id)
+          .roles.cache.map((roles) => `\`${roles.name}\``)
+          .join(", ")
+      )
+      .setColor(0x66b3ff);
+
+    message.channel.send(embed);
   } else if (command === "franco") {
     client.commands.get("franco").execute(message, args);
   } else if (command === "violeta") {
