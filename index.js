@@ -113,6 +113,7 @@ client.on("message", async (message) => {
 
     message.channel.send(embed3);
   } else if (command === "bot") {
+    let user = message.author;
     const moment = require("moment");
     require("moment-duration-format");
 
@@ -124,7 +125,7 @@ client.on("message", async (message) => {
       .setColor(0x66ff66)
 
       .setAuthor(
-        `Información del bot`,
+        user.tag,
         client.user.displayAvatarURL({
           format: "png",
           size: 1024,
