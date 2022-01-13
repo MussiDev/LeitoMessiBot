@@ -8,10 +8,6 @@ module.exports = {
     if (!message.member.permissionsIn(message.channel).has("MANAGE_MESSAGES"))
       return message.channel.send("Pero no tienes permisos hermano");
 
-    if (!args[0])
-      return message.channel.send(
-        "Te pensas que soy adivino? Escribí el comando y después un numero por favor"
-      );
     let cantidad = parseInt(args[0]);
 
     if (!cantidad || isNaN(cantidad))
