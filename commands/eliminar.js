@@ -17,7 +17,7 @@ module.exports = {
 
     if (cantidad > 100) {
       message.channel.send(
-        "El maximo de mensajes que puedo borrar es 100 pelotudo"
+        "El maximo de mensajes que puedo borrar es 100 jejej"
       );
       cantidad = 100;
     }

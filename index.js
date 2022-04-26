@@ -43,9 +43,7 @@ client.on("message", async (message) => {
     .setTitle("Hola!")
     .setAuthor(message.author.username, message.author.displayAvatarURL())
     .setColor(0x00ae86)
-    .setDescription(
-      `Tu nariz contra mis bolas. Comiste brother ${message.author} `
-    )
+    .setDescription(`jeje. Comiste brother ${message.author} `)
     .setImage(message.author.displayAvatarURL())
     .setThumbnail(message.author.displayAvatarURL())
     .setTimestamp();
@@ -167,7 +165,7 @@ client.on("message", async (message) => {
     }
     const song = args.join(" ");
     if (!song) {
-      message.channel.send("Escribí que queres escuchar la puta que te parió");
+      message.channel.send("Escribí que queres escuchar jeje");
     } else {
       distube.play(message, args.join(" "));
     }
@@ -198,9 +196,7 @@ client.on("message", async (message) => {
   } else if (command === "eliminar") {
     client.commands.get("eliminar").execute(message, args);
   } else {
-    message.channel.send(
-      "Escribí un comando que exista la concha de tu madre."
-    );
+    message.channel.send("Escribí un comando que exista jeje.");
   }
 });
 // Cuando se borra un mensaje del canal -->
@@ -249,10 +245,10 @@ distube.on("error", (textChannel, e) => {
   textChannel.send(`Rompiste todo: ${e.slice(0, 2000)}`);
 });
 distube.on("finishSong", (queue) =>
-  queue.textChannel.send("Terminó tu canción de mierda!")
+  queue.textChannel.send("Terminó tu canción jeje!")
 );
 distube.on("finishPlaylist", (queue) =>
-  queue.textChannel.send("Terminó tu playlist de mierda!")
+  queue.textChannel.send("Terminó tu playlist jeje!")
 );
 distube.on("disconnect", (queue) => queue.textChannel.send("Me fuí!"));
 distube.on("empty", (queue) => queue.textChannel.send("eh!"));
@@ -268,14 +264,12 @@ distube.on("searchResult", (message, result) => {
   );
 });
 distube.on("searchCancel", (message) =>
-  message.channel.send(`Busqueda cancelada por hijo de puta`)
+  message.channel.send(`Busqueda cancelada jeje`)
 );
 distube.on("searchInvalidAnswer", (message) =>
   message.channel.send(`Terminaste el secundario?`)
 );
-distube.on("searchNoResult", (message) =>
-  message.channel.send(`No hay nada la concha bien celosa de tu hermana `)
-);
+distube.on("searchNoResult", (message) => message.channel.send(`No hay nada `));
 distube.on("done", () => {});
 // Consume el token creado en config.json
 client.login(process.env.BOT_TOKEN);
